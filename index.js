@@ -37,7 +37,7 @@ function prenderApagarBoton(btn) {
     }
 }
 
-function prenderApagarBotones() {
+function prenderApagarCualquierBoton() {
     //transformo el html collection en un array comun y corriente
     const buttons = [...buttonContainer.children];
     buttons.forEach(btn => {
@@ -46,6 +46,23 @@ function prenderApagarBotones() {
 }
 
 
+function prenderBotonActualYApagarLosDemas(btn) {
+    prenderApagarBoton(btn)
+    const buttons = [...buttonContainer.children];
+    let restoBotones = buttons.filter(boton => boton !== btn)
+    console.log(restoBotones)
+    restoBotones.forEach(boton => boton.classList.remove('active'))
+}
+
+
+function prenderApagarBotones() {
+    //transformo el html collection en un array comun y corriente
+    const buttons = [...buttonContainer.children];
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => { prenderBotonActualYApagarLosDemas(btn) });
+    })
+
+}
 
 
 ///////////////////////////////////////////////////////////////////////////
