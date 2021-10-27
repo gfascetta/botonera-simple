@@ -37,33 +37,26 @@ function prenderApagarBoton(btn) {
     }
 }
 
-function prenderApagarCualquierBoton() {
-    //transformo el html collection en un array comun y corriente
+function prenderBotonActualYApagarLosDemasBotones(evento) {
+    evento.preventDefault()
+
     const buttons = [...buttonContainer.children];
-    buttons.forEach(btn => {
-        btn.addEventListener('click', () => { prenderApagarBoton(btn) });
-    })
+
+    if (buttons.some(boton => boton.classList.contains('active'))) {
+
+        const activeButton = buttons.find(boton => boton.classList.contains('active'))
+        activeButton.classList.remove('active')
+    }
+    prenderApagarBoton(this)
 }
-
-
-function prenderBotonActualYApagarLosDemas(btn) {
-    prenderApagarBoton(btn)
-    const buttons = [...buttonContainer.children];
-    let restoBotones = buttons.filter(boton => boton !== btn)
-    console.log(restoBotones)
-    restoBotones.forEach(boton => boton.classList.remove('active'))
-}
-
 
 function prenderApagarBotones() {
     //transformo el html collection en un array comun y corriente
     const buttons = [...buttonContainer.children];
     buttons.forEach(btn => {
-        btn.addEventListener('click', () => { prenderBotonActualYApagarLosDemas(btn) });
+        btn.addEventListener('click', prenderBotonActualYApagarLosDemasBotones);
     })
-
 }
-
 
 ///////////////////////////////////////////////////////////////////////////
 //concentro todas las llamadas de funcion en una sola:
@@ -74,4 +67,30 @@ function main() {
 
 main();
 //--------------------
-//console.log(boton1.nextElementSibling.style);
+
+
+//////Manera menos eficiente de resolverlo/////////////////////////////////////////////////////////////////////
+function prenderApagarCualquierBoton() {
+    //transformo el html collection en un array comun y corriente
+    const buttons = [...buttonContainer.children];
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => { prenderApagarBoton(btn) });
+    })
+}
+
+function prenderBotonActualYApagarLosDemas(btn) {
+    prenderApagarBoton(btn)
+    const buttons = [...buttonContainer.children];
+    let restoBotones = buttons.filter(boton => boton !== btn)
+    console.log(restoBotones)
+    restoBotones.forEach(boton => boton.classList.remove('active'))
+}
+
+function prenderApagarBotones1() {
+    //transformo el html collection en un array comun y corriente
+    const buttons = [...buttonContainer.children];
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => { prenderBotonActualYApagarLosDemasBotones(btn) });
+    })
+
+}
